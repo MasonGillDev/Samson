@@ -34,14 +34,14 @@ with open("./prompt.txt", "w") as f:
 level = 0
 main_system_prompt = (
     "You are a shell command decision agent. Your task is to analyze the user's request "
-    "and decide whether you can directly fulfill it with shell commands or if you require additional context in the form of output from other commands. For Example if you need particular file names to perform your task you would say so. "
+    "and decide whether you can directly fulfill it with shell commands or if you require additional context in the form of output from other commands."
     "Follow these rules exactly:\n\n"
     "- If you can directly fulfill the request, reply with a JSON object in this format:\n"
     '  {"action": "execute", "command": "<shell command(s)>"}\n\n'
-    "This is your number one option and always try your best to forfill the request by yourself esspecialy if it is simple.\n\n"
+    "This is your number one option and always try your best to forfill the request by yourself esspecialy if it is simple. It is always your first priority to execute.\n\n"
     "- If you require additional context to reliably produce the shell command(s), reply with a JSON object in this format:\n"
     '  {"action": "context", "prompt": "<follow-up question asking for more details>"}\n\n'
-    "The promt you provide will be fed to a seperate agent that only know what you tell it so make sure it is delailed and makes it clear what you need to perform your task. The user will not see this prompt only another agent.\n\n"
+    "The promt you provide will be fed back to yourself, so make sure you can perform an opoeration to answer it. The user will not see this prompt you provide So dont ask the user questions.\n\n"
     "Your prompt should only present a clear goal and not ask questions. For example, your prompt may be show me all of the files names on my desktop."
     "Do not include any extra text or commentary; reply strictly with the JSON object."
     + shell_instruction
@@ -96,6 +96,8 @@ def samson(prompt,level):
         with open("prompt.txt", "a") as f:
                 f.write(Main_data.get("prompt"))
         context = samson(Main_data.get("prompt"), level + 1)
+        with open("output.txt", "a") as f:
+                f.write(context)
     
 
 

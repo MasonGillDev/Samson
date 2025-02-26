@@ -1,6 +1,6 @@
-cmd=$(python3 /Users/masongill/Desktop/Samson/samson.py | tr -d '\r' | awk '{$1=$1};1')
+cmd=$(python3 /Users/masongill/Desktop/Projects/Samson/loop_agent_model.py | tr -d '\r' | awk '{$1=$1};1')
 
-output=/Users/masongill/Desktop/Samson/output.txt
+output=/Users/masongill/Desktop/Projects/Samson/output.txt
 
 echo "Executing:"
 echo "$cmd"
@@ -48,15 +48,15 @@ read -r dummy < /dev/tty
 echo "Executing: $cmd"
 
 # Run the command directly in the current shell
-eval "$cmd" 2>&1 > "/Users/masongill/Desktop/Samson/output.txt"
+eval "$cmd" 2>&1 > "/Users/masongill/Desktop/Programs/Samson/output.txt"
 # Also display the output if needed
-cat "/Users/masongill/Desktop/Samson/output.txt"
+cat "/Users/masongill/Desktop/Programs/Samson/output.txt"
 
 
 
 command="$cmd"
 
-
+#This function is not yet working
 while grep -qi "error\|failed\|no such file\|not found" "$output"; do
     echo "Error detected. Re-running the Python program..."
 
